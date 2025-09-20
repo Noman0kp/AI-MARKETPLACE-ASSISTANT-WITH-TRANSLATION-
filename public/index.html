@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Artisan Marketplace</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="hero">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1>
+          Craft Your Perfect
+          <span class="highlight">Product Story</span>
+        </h1>
+        <p>
+          Transform your artisan creations into compelling marketplace listings with AI-powered descriptions
+        </p>
+      </div>
+    </div>
+
+    <div class="container">
+      <form id="artisanForm">
+        <input type="text" id="productName" placeholder="Product Name" required />
+        <textarea id="artisanStory" placeholder="Short Craft/Artisan Story" rows="4" required></textarea>
+        <button type="submit">Generate Description</button>
+      </form>
+
+      <div class="output-container">
+        <h2>AI Output:</h2>
+        <div id="result"></div>
+        <div class="translation-container">
+          <label for="language-select">Translate Description:</label>
+          <select id="language-select">
+            <option value="">Select a language</option>
+            <option value="hi">Hindi</option>
+            <option value="ta">Tamil</option>
+            <option value="te">Telugu</option>
+            <option value="bn">Bengali</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- The script for AI generation and translation -->
+    <script>
+      const resultDiv = document.getElementById('result');
+      const languageSelect = document.getElementById('language-select');
+      const artisanForm = document.getElementById('artisanForm');
+
+      let currentGeneratedText = ""; // Variable to hold the original English text
+
+      // Handle the form submission to generate AI content
+      artisanForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const productName = document.getElementById('productName').value;
+        const artisanStory = document.getElementById('artisanStory').value;
+
+        resultDiv.innerText = 'Generating...'; // Show a loading message
+
+        try {
+          const response = await fetch('http://localhost:3000/generate', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ productName, artisanStory }),
+          });
+
+          const data = await response.json();
+          if (response.ok) {
+            currentGeneratedText = data.result; // Store the generated text for translation
+            resultDiv.innerText = currentGeneratedText; // Display the generated text
+          } else {
+            resultDiv.innerText = data.error || 'Generation failed.';
+            console.error('Generation error:', data.details);
+          }
+        } catch (error) {
+          console.error('Network error:', error);
+          resultDiv.innerText = 'Generation failed.';
+        }
+      });
+      
+      // Handle the language selection for translation
+      languageSelect.addEventListener('change', async (event) => {
+        const targetLanguage = event.target.value;
+        
+        if (targetLanguage && currentGeneratedText) {
+          resultDiv.innerText = 'Translating...'; // Show loading state
+
+          try {
+            const response = await fetch('http://localhost:3000/translate', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                text: currentGeneratedText, // Use the stored text
+                targetLanguage: targetLanguage
+              }),
+            });
+
+            const data = await response.json();
+            
+            if (response.ok) {
+              resultDiv.innerText = data.translatedText;
+            } else {
+              resultDiv.innerText = data.error || 'Translation failed.';
+              console.error('Translation error:', data.details);
+            }
+          } catch (error) {
+            console.error('Network error:', error);
+            resultDiv.innerText = 'Translation failed.';
+          }
+        } else if (!targetLanguage && currentGeneratedText) {
+            // If user selects "Select a language" and there's text, revert to original
+            resultDiv.innerText = currentGeneratedText;
+        }
+      });
+    </script>
+  </body>
+</html>
