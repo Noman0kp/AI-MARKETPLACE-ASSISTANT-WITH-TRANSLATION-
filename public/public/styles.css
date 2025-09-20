@@ -1,0 +1,179 @@
+/* Body & Background */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  background: linear-gradient(135deg, #a8edea, #fed6e3); /* pastel gradient */
+  min-height: 100vh;
+}
+
+/* Hero Section */
+.hero {
+  position: relative;
+  background: url('hero-image-blue.jpg') center/cover no-repeat;
+  height: 35vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.4); /* softened overlay */
+}
+
+.hero-content {
+  position: relative;
+  text-align: center;
+  z-index: 1;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.highlight {
+  background: linear-gradient(90deg, #81c7f5, #a0e7e5); /* pastel gradient */
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+/* Main Container */
+.container {
+  max-width: 700px;
+  margin: -3rem auto 2rem; /* pulls up the container over hero */
+  padding: 2rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.25); /* frosted effect */
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Inputs */
+form input,
+form textarea {
+  width: 95%;
+  margin: 0.5rem 0;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.6);
+  -webkit-backdrop-filter: blur(5px); /* Safari */
+  backdrop-filter: blur(5px);         /* Standard */
+  outline: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+
+form input:focus,
+form textarea:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Submit Button */
+form button {
+  margin-top: 0.5rem;
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 12px;
+  background: #81c7f5; /* pastel blue */
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+
+form button:hover {
+  background: #66b2f5;
+  transform: translateY(-2px);
+}
+
+/* Output Box */
+.output-container {
+  margin-top: 2rem;
+}
+
+
+#result {
+  background: rgba(255, 255, 255, 0.25); /* frosted effect */
+  -webkit-backdrop-filter: blur(10px);
+   backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 1.5rem;
+  min-height: 150px;
+  white-space: pre-wrap;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  font-size: 1rem;
+  color: #222;
+  transition: background 0.3s ease;
+}
+
+#result::placeholder {
+  color: #555;
+}
+
+/* Translation Dropdown Styling */
+.translation-container {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.translation-container label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #444;
+}
+
+#language-select {
+  padding: 0.7rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.6);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  outline: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  appearance: none; /* remove default browser arrow */
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'><path fill='%2366b2f5' d='M5.5 7l4.5 5 4.5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1rem;
+}
+
+#language-select:hover,
+#language-select:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.image-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+.image-preview img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
